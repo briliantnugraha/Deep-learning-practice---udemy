@@ -93,7 +93,7 @@ class ANN(object):
         return np.argmax(pY, axis=1)
         
             
-    def fit(self, X, Y, learning_rate = 10e-5, \
+    def fit(self, X, Y, learning_rate = 10e-8, \
             reg=10e-2, epoch = 10000, show_fig = False):
         #divide into train and test data
         Xtest, Ytest, Xtrain, Ytrain = self.prepare_data(X, Y, multi=True)
