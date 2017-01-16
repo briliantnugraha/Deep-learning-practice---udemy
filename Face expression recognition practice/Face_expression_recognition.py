@@ -22,7 +22,6 @@ def classify_binary(dataset_path):
 
 def classify_multiclass(dataset_path):
     X, Y   = getData(dataset_path)
-    
     #this is for classify multiclass classification
     model = ANN(200)
     model.fit(X, Y, show_fig=True)

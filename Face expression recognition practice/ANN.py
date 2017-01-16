@@ -85,7 +85,6 @@ class ANN(object):
     def forward_multi(self, X):
 #        Z = relu(X.dot(self.W1) + self.b1)
         Z = np.tanh(X.dot(self.W1) + self.b1)
-#        print Z.shape
         return softmax(Z.dot(self.W2) + self.b2), Z
     
     def predict_multi(self, X):
@@ -93,12 +92,12 @@ class ANN(object):
         return np.argmax(pY, axis=1)
         
             
-    def fit(self, X, Y, learning_rate = 10e-8, \
-            reg=10e-2, epoch = 10000, show_fig = False):
+    def fit(self, X, Y, learning_rate = 10e-7, \
+            reg=10e-7, epoch = 10000, show_fig = False):
         #divide into train and test data
         Xtest, Ytest, Xtrain, Ytrain = self.prepare_data(X, Y, multi=True)
         Ttrain = y2indicator(Ytrain)
-        Ttest = y2indicator(Ytest)
+        Ttest  = y2indicator(Ytest)
         
         costs = []
         best_validation_error = 1
@@ -108,7 +107,7 @@ class ANN(object):
             #back prop
             pY_Y = pY - Ttrain
             self.W2 -= learning_rate * (Z.T.dot(pY_Y) + reg*self.W2)
-            self.b2 -= learning_rate * (pY_Y.sum() + reg*self.b2)
+            self.b2 -= learning_rate * (pY_Y.sum(axis=0) + reg*self.b2)
             
 #            dZ = np.outer(pY_Y, self.W2)* (Z > 0) #Z > 0 is derivative of ReLU
 #            print pY_Y.shape, self.W2.shape, Z.shape
